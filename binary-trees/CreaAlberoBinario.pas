@@ -7,30 +7,10 @@ type
         info : integer;
         links : tRefBinBaum;
         rechts : tRefBinBaum
-        end;
+    end;
 
-
-
-procedure BBAufbauen (var outRefWurzel : tRefBinBaum);
-{ baut fuer eine Eingabe von integer-Zahlen <> 0 einen
-Suchbaum auf und gibt einen Zeiger auf dessen Wurzel
-in outRefWurzel zurueck }
-var
-    Zahl : integer;
-begin
-    { outRefWurzel mit leerem Baum initialisieren }
-    outRefWurzel := nil;
-    readln (Zahl);
-
-    while Zahl <> 0 do
-        begin
-            BBKnotenEinfuegen (Zahl, outRefWurzel);
-            readln (Zahl)
-        end
-end; { BBAufbauen }
-
-
-
+var 
+    wurzel : tRefBinBaum; 
 
 
 procedure BBKnotenEinfuegen (
@@ -82,15 +62,48 @@ begin
 end; { BBKnotenEinfuegen }
 
 
+procedure BBAufbauen (var outRefWurzel : tRefBinBaum);
+{ baut fuer eine Eingabe von integer-Zahlen <> 0 einen
+Suchbaum auf und gibt einen Zeiger auf dessen Wurzel
+in outRefWurzel zurueck }
+var
+    Zahl : integer;
+begin
+    { outRefWurzel mit leerem Baum initialisieren }
+    outRefWurzel := nil;
+    readln (Zahl);
+
+    while Zahl <> 0 do
+        begin
+            BBKnotenEinfuegen (Zahl, outRefWurzel);
+            readln (Zahl)
+        end
+end; { BBAufbauen }
+
+
+procedure BBHauptreihenfolge (inRefWurzel : tRefBinBaum);
+{ durchlaeuft rekursiv in Hauptreihenfolge die Knoten
+des Binaerbaumes, auf dessen Wurzel inRefWurzel
+zeigt }
+begin
+    if inRefWurzel <> nil then
+    begin
+    { betrachte die Wurzel, d.h. fuehre die
+    problemabhaengigen Arbeitsschritte fuer
+    die Wurzel aus }
+        writeln(inRefWurzel^.info); 
+        BBHauptreihenfolge (inRefWurzel^.links);
+        BBHauptreihenfolge (inRefWurzel^.rechts)
+
+    end
+end; { BBHauptreihenfolge }
 
 begin
-    
-    BBAufbauen(outRefWurzel);
+    BBAufbauen(wurzel);
 
-    BBKnotenEinfuegen (Zahl, outRefWurzel);
-
-
+    writeln('corretto: '); 
+    BBHauptreihenfolge(wurzel);
 
     
 
-end;
+end.
